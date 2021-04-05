@@ -4,14 +4,33 @@
 <wizard>
 	<plugin type="minimalIO">
 	</plugin>
-	<plugin type="dialogos.plugin.tts">
-	</plugin>
 	<graph directed="1" Graphic="1" Layout="points">
-		<att name="width" type="integer" value="765"/>
-		<att name="height" type="integer" value="542"/>
+		<att name="width" type="integer" value="838"/>
+		<att name="height" type="integer" value="544"/>
 		<groovyFunctions></groovyFunctions>
+		<grammar id="017062be-010f-41cc-8e42-d918ab213b39">
+			<name>egal</name>
+			<value>language &quot;Deutsch&quot;;
+root $input;
+ $input = egal;</value>
+		</grammar>
+		<variable uid="d9a1cc71-b46f-46e3-976e-108d65009444">
+			<name>ergebnis</name>
+			<type>string</type>
+			<value>&quot;&quot;</value>
+		</variable>
+		<node uid="0cba80a5-6508-4a30-92f3-6a462f814ff7" class="minimalIO.TextOutputNode">
+			<graphics x="377" y="321" fill="#00b200"/>
+			<att name="title" type="string" value="TextOutput"/>
+			<att name="prompt" type="text">
+				<value>&quot;Du hast '&quot; + ergebnis + &quot;' geschrieben.&quot;</value>
+			</att>
+			<att name="prompt_type" type="string" value="expression"/>
+			<att name="wait" type="boolean" value="1"/>
+			<att name="await_silence" type="boolean" value="0"/>
+		</node>
 		<node uid="17a89f9b-5d24-45f7-b53d-8933ced34e29" class="minimalIO.TextInputNode">
-			<graphics x="388" y="182" fill="#b20000"/>
+			<graphics x="365" y="115" fill="#b20000"/>
 			<att name="title" type="string" value="TextInput"/>
 		</node>
 		<node uid="2a5ddf6b-43a6-4adf-98ec-f489a5c88e7c" class="com.clt.diamant.graph.nodes.EndNode">
@@ -22,16 +41,24 @@
 			<graphics x="370" y="40" fill="#9999ff"/>
 			<att name="title" type="string" value="Start"/>
 		</node>
+		<node uid="e6f4e207-154a-44c2-847f-52f2316a19a8" class="minimalIO.TextInputNode">
+			<graphics x="385" y="259" fill="#b20000"/>
+			<att name="title" type="string" value="TextInput"/>
+			<att name="grammar" type="string" value="017062be-010f-41cc-8e42-d918ab213b39"/>
+		</node>
 		<node uid="ef4d700a-fa05-43b9-ba5d-a19f46d3308e" class="minimalIO.TextOutputNode">
-			<graphics x="368" y="294" fill="#00b200"/>
+			<graphics x="365" y="182" fill="#00b200"/>
 			<att name="title" type="string" value="TextOutput"/>
 			<att name="prompt" type="text">
-				<value>hallo
+				<value>hallo, schreib irgendwas.
 </value>
 			</att>
 			<att name="prompt_type" type="string" value="text"/>
 			<att name="wait" type="boolean" value="1"/>
+			<att name="await_silence" type="boolean" value="0"/>
 		</node>
+		<edge src="0cba80a5-6508-4a30-92f3-6a462f814ff7" tgt="2a5ddf6b-43a6-4adf-98ec-f489a5c88e7c">
+		</edge>
 		<edge src="17a89f9b-5d24-45f7-b53d-8933ced34e29" tgt="ef4d700a-fa05-43b9-ba5d-a19f46d3308e">
 			<att name="condition" type="string" value="eins"/>
 		</edge>
@@ -40,7 +67,10 @@
 		</edge>
 		<edge src="367451bc-f053-4a29-a1fc-3772f7b7afc0" tgt="17a89f9b-5d24-45f7-b53d-8933ced34e29">
 		</edge>
-		<edge src="ef4d700a-fa05-43b9-ba5d-a19f46d3308e" tgt="2a5ddf6b-43a6-4adf-98ec-f489a5c88e7c">
+		<edge src="e6f4e207-154a-44c2-847f-52f2316a19a8" tgt="0cba80a5-6508-4a30-92f3-6a462f814ff7">
+			<att name="condition" type="string" value="ergebnis"/>
+		</edge>
+		<edge src="ef4d700a-fa05-43b9-ba5d-a19f46d3308e" tgt="e6f4e207-154a-44c2-847f-52f2316a19a8">
 		</edge>
 	</graph>
 </wizard>

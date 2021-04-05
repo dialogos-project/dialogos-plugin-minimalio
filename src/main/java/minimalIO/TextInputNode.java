@@ -4,17 +4,17 @@ import com.clt.diamant.Device;
 import com.clt.diamant.InputCenter;
 import com.clt.diamant.graph.nodes.AbstractInputNode;
 import com.clt.diamant.graph.nodes.NodeExecutionException;
+import com.clt.script.exp.Match;
 import com.clt.script.exp.Pattern;
+import com.clt.script.exp.Value;
 import com.clt.script.exp.patterns.VarPattern;
+import com.clt.script.exp.values.StringValue;
 import com.clt.speech.recognition.*;
 import com.clt.srgf.Grammar;
 
 import javax.sound.sampled.AudioFormat;
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Created by timo on 09.10.17.
@@ -51,6 +51,22 @@ public class TextInputNode extends AbstractInputNode {
             System.out.println("confirming result: " + match.getUtterance());
         return match;
     }
+
+    public static MatchResult findMatch(String utterance, com.clt.srgf.Grammar recGrammar, Pattern[] patterns) {
+        MatchResult mr = AbstractInputNode.findMatch(utterance, recGrammar, patterns);
+        if (mr != null && mr.getMatch() != null) {
+            Match m = mr.getMatch();
+            Iterator<String> variables = m.variables();
+            while (variables.hasNext()) {
+                String var = variables.next();
+                if (m.get(var) == null) {
+                    m.put(var, new StringValue(utterance)); //Value.fromJson(utterance));
+                }
+            }
+        }
+        return mr;
+    }
+
 
     @Override
     public AudioFormat getAudioFormat() {
